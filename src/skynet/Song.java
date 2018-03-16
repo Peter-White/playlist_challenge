@@ -2,11 +2,13 @@ package skynet;
 
 public class Song {
 	private String name;
+	private String artist;
 	private int duration;
 	
-	public Song(String name, int duration) {
+	public Song(String name, String artist, int duration) {
 		super();
 		this.name = name;
+		this.artist = artist;
 		this.duration = duration;
 	}
 

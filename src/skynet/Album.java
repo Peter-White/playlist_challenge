@@ -35,7 +35,7 @@ public class Album {
 	}
 
 	public void setTracks(Song song) {
-		if(findTrack(song) > -1) {
+		if(findTrack(song) == -1) {
 			getTracks().add(song);
 		} else {
 			System.out.println(song.getName() + " is already in the album");

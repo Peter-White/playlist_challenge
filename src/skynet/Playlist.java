@@ -23,9 +23,30 @@ public class Playlist {
 	public ArrayList<Song> getTracks() {
 		return tracks;
 	}
+	
+//	public void deleteTrack(int position) {
+//		if(findTrack(song) > -1) {
+//			getTracks().remove(findTrack(song));
+//		} else {
+//			System.out.println("Track not found");
+//		}
+//	}
+	
+//	public void listTracks() {
+//		System.out.println(getName() + " by " + getArtist() + ":");
+//		System.out.println("");
+//		for (int i = 0; i < getTracks().size(); i++) {
+//			System.out.println((i +1) + ". " + getTracks().get(i).getName() + 
+//					" - " + getTracks().get(i).getDuration());
+//		}
+//	}
 
-	public void setTracks(ArrayList<Song> tracks) {
-		this.tracks = tracks;
+	public void setTracks(Song song) {
+		if(findTrack(song) == -1) {
+			getTracks().add(song);
+		} else {
+			System.out.println(song.getName() + " is already in the album");
+		}
 	}
 
 	public int findTrack(String name) {
