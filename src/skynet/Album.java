@@ -35,13 +35,33 @@ public class Album {
 	}
 
 	public void setTracks(Song song) {
-		getTracks().add(song);
-		System.out.println(song.getName() + " added to " + getName());
+		if(findTrack(song) > -1) {
+			getTracks().add(song);
+		} else {
+			System.out.println(song.getName() + " is already in the album");
+		}
+	}
+	
+	public void listTracks() {
+		System.out.println(getName() + " by " + getArtist() + ":");
+		System.out.println("");
+		for (int i = 0; i < getTracks().size(); i++) {
+			System.out.println((i +1) + ". " + getTracks().get(i).getName() + 
+					" - " + getTracks().get(i).getDuration());
+		}
 	}
 	
 	public int findTrack(String name) {
 		for (Song song : tracks) {
 			if(song.getName().equals(name)) {
+				return tracks.indexOf(song);
+			}
+		}
+		return -1;
+	}
+	public int findTrack(Song songo) {
+		for (Song song : tracks) {
+			if(song.equals(songo)) {
 				return tracks.indexOf(song);
 			}
 		}
