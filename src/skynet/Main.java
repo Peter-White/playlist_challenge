@@ -40,11 +40,54 @@ public class Main {
 		downwardSpiral.setTracks(new Song("The Downward Spiral", downwardSpiral.getArtist(), 237));
 		downwardSpiral.setTracks(new Song("Hurt", downwardSpiral.getArtist(), 373));
 		albums.add(downwardSpiral);
-		System.out.println("*****************************************************");
-		listAlbums();
+		
+		
+	}
+	
+	public static void printInstructions() {
+        System.out.println("\nPress: ");
+        System.out.println("\t 0 - To view options.");
+        System.out.println("\t 1 - List all playlists.");
+        System.out.println("\t 2 - To open a playlist.");
+        System.out.println("\t 3 - To create a new playlist.");
+        System.out.println("\t 4 - To rename a playlist.");
+        System.out.println("\t 5 - To delete a playlist.");
+        System.out.println("\t 6 - To view your albums.");
+        System.out.println("\t 7 - To quit the application.");
 	}
 
-	public static void listAlbums() {
+	public static void printAlbumsInstructions() {
+        System.out.println("\nPress: ");
+        System.out.println("\t 0 - To view options.");
+        System.out.println("\t 1 - List all albums.");
+        System.out.println("\t 2 - To open an album.");
+        System.out.println("\t 3 - To quit the application.");
+	}
+	
+	public static void printAlbumInstructions() {
+        System.out.println("\nPress: ");
+        System.out.println("\t 0 - To view options.");
+        System.out.println("\t 1 - List album tracks.");
+        System.out.println("\t 2 - To add track to playlist.");
+        System.out.println("\t 3 - To quit the application.");
+	}
+	
+	public static void printPlayInstructions() {
+        System.out.println("\nPress: ");
+        System.out.println("\t 0 - To view options.");
+        System.out.println("\t 1 - Play previous song.");
+        System.out.println("\t 2 - Skip to next song.");
+        System.out.println("\t 3 - Replay current song.");
+        System.out.println("\t 4 - Back.");
+	}
+	
+	public static void listAllPlaylists() {
+		for (int i = 0; i < playlists.size(); i++) {
+			System.out.println((i + 1) + ". " + playlists.get(i).getName());
+		}
+	}
+	
+	public static void listSongs() {
 		for (Album album : albums) {
 			System.out.println(album.getName() + " by " + album.getArtist());
 			for (Song song : album.getTracks()) {

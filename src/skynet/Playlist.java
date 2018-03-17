@@ -40,6 +40,10 @@ public class Playlist {
 //					" - " + getTracks().get(i).getDuration());
 //		}
 //	}
+	
+//	public void moveTrack() {
+//		
+//	}
 
 	public void setTracks(Song song) {
 		if(findTrack(song) == -1) {
