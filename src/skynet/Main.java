@@ -66,7 +66,7 @@ public class Main {
 					listAllPlaylists();
 					break;
 				case 2:
-					openBranch();
+					openPlaylist();
 					break;
 				case 3:
 					createBranch();
@@ -136,7 +136,7 @@ public class Main {
         System.out.println("\t 4 - Back.");
 	}
 	
-	// Playlist options
+	// Main menu options
 	public static void listAllPlaylists() {
 		for (int i = 0; i < playlists.size(); i++) {
 			System.out.println((i + 1) + ". " + playlists.get(i).getName());
@@ -150,29 +150,66 @@ public class Main {
 		if(position != -1) {
 			Playlist currentPlaylist = playlists.get(position);
 			boolean mainMenu = false;
+			printPlaylistInstructions();
 			int choice = 0;
 			while (!mainMenu) {
 				System.out.println("Enter your choice");
 				choice = scanner.nextInt();
-				switch (!choice) {
+				switch (choice) {
 				case 0:
 					printPlaylistInstructions();
 					break;
 				case 1:
-					
+					listPlaylistTracks(currentPlaylist);
 					break;
 				case 2:
-					
+					playPlaylist(currentPlaylist);
 					break;
 				case 3:
-					
+					rearrangeSongs(currentPlaylist);
+					break;
+				case 4:
+					deleteSong(currentPlaylist);
+					break;
+				case 5:
+					System.out.println("Back to main");
+					mainMenu = true;
 					break;
 				default:
+					System.out.println("Invalid");
 					break;
 				}
 			}
 		} else {
 			System.out.println("Playlist not found");
+		}
+	}
+	
+	public static void viewAlbumsMenu() {
+		boolean mainMenu = false;
+		printAlbumsInstructions();
+		int choice = 0;
+		while (!mainMenu) {
+			System.out.println("Enter your choice");
+			choice = scanner.nextInt();
+			switch (choice) {
+			case 0:
+				printAlbumsInstructions();
+				break;
+			case 1:
+				listAlbums();
+				break;
+			case 2:
+				openAlbum();
+				break;
+			case 3:
+				System.out.println("Back to Main");
+				mainMenu = true;
+				break;
+			default:
+				System.out.println("Invalid");
+				break;
+			}
 		}
 	}
 	
@@ -216,15 +253,6 @@ public class Main {
 			System.out.println(title + " deleted");
 		} else {
 			System.out.println("Playlist not found");
-		}
-	}
-	
-	public static void listSongs() {
-		for (Album album : albums) {
-			System.out.println(album.getName() + " by " + album.getArtist());
-			for (Song song : album.getTracks()) {
-				System.out.println(song.getName());
-			}
 		}
 	}
 	
@@ -325,6 +353,12 @@ public class Main {
 			System.out.println("Track not available");
 		}
 	}
+	
+	// Playlist Options
+	public static void listPlaylistTracks(Playlist playlist) {
+		playlist.listTracks();
+	}
+	
 	// Play Options
 	
 }

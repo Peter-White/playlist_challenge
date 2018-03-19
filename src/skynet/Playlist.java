@@ -36,14 +36,12 @@ public class Playlist {
 //		}
 //	}
 	
-//	public void listTracks() {
-//		System.out.println(getName() + " by " + getArtist() + ":");
-//		System.out.println("");
-//		for (int i = 0; i < getTracks().size(); i++) {
-//			System.out.println((i +1) + ". " + getTracks().get(i).getName() + 
-//					" - " + getTracks().get(i).getDuration());
-//		}
-//	}
+	public void listTracks() {
+		for (int i = 0; i < getTracks().size(); i++) {
+			System.out.println((i +1) + ". " + getTracks().get(i).getName() + 
+					" - " + getTracks().get(i).getDuration());
+		}
+	}
 	
 //	public void moveTrack() {
 //		
