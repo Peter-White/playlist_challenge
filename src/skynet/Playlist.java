@@ -1,32 +1,36 @@
 package skynet;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class Playlist {
 
 	private String name;
-	private ArrayList<Song> tracks;
+	private LinkedList<Song> tracks;
 	
 	public Playlist(String name) {
 		super();
 		this.name = name;
-		this.tracks = new ArrayList<Song>();
+		this.tracks = new LinkedList<Song>();
 	}
 	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	
-	public ArrayList<Song> getTracks() {
+//	public void setName(String name) {
+//		String oldName = this.name;
+//		this.name = name;
+//		System.out.println(oldName + " is now " this.name);
+//	}
+	
+	public LinkedList<Song> getTracks() {
 		return tracks;
 	}
 	
 //	public void deleteTrack(int position) {
-//		if(findTrack(song) > -1) {
-//			getTracks().remove(findTrack(song));
+//		if(findTrack(position) > -1) {
+//			getTracks().remove(findTrack(position));
 //		} else {
 //			System.out.println("Track not found");
 //		}
@@ -44,6 +48,11 @@ public class Playlist {
 //	public void moveTrack() {
 //		
 //	}
+	
+	public void addTrack(Song newSong) {
+		ListIterator<Song> songListIterator = getTracks().listIterator();
+		songListIterator.add(newSong);
+	}
 
 	public void setTracks(Song song) {
 		if(findTrack(song) == -1) {

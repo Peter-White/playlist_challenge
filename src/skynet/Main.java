@@ -1,10 +1,15 @@
 package skynet;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 public class Main {
 	private static ArrayList<Album> albums = new ArrayList<Album>();
 	private static ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+	private static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
@@ -41,10 +46,50 @@ public class Main {
 		downwardSpiral.setTracks(new Song("Hurt", downwardSpiral.getArtist(), 373));
 		albums.add(downwardSpiral);
 		
+		boolean quit = false;
+		int choice = 0;
 		
+		System.out.println("Song Dumpster by Rapple");
+		printMainInstructions();
+		
+		while (!quit) {			
+			System.out.println("");
+			System.out.println("Enter your choice:");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+			
+			switch (choice) {
+				case 0:
+					printMainInstructions();
+					break;
+				case 1:
+					listAllPlaylists();
+					break;
+				case 2:
+					openBranch();
+					break;
+				case 3:
+					createBranch();
+					break;
+				case 4:
+					updateBranch();
+					break;
+				case 5:
+					deleteBranch();
+					break;
+				case 6:
+					System.out.println("Goodbye");
+					quit = true;
+					break;
+				default:
+					System.out.println("Invalid selection. Try Again.");
+					break;
+			}
+		}
 	}
 	
-	public static void printInstructions() {
+	// Instructions
+	public static void printMainInstructions() {
         System.out.println("\nPress: ");
         System.out.println("\t 0 - To view options.");
         System.out.println("\t 1 - List all playlists.");
@@ -56,12 +101,22 @@ public class Main {
         System.out.println("\t 7 - To quit the application.");
 	}
 
+	public static void printPlaylistInstructions() {
+        System.out.println("\nPress: ");
+        System.out.println("\t 0 - To view options.");
+        System.out.println("\t 1 - To list all tracks.");
+        System.out.println("\t 2 - To play playlist.");
+        System.out.println("\t 3 - To rearrange song playlist.");
+        System.out.println("\t 4 - To remove song playlist.");
+        System.out.println("\t 5 - To go back.");
+	}
+	
 	public static void printAlbumsInstructions() {
         System.out.println("\nPress: ");
         System.out.println("\t 0 - To view options.");
         System.out.println("\t 1 - List all albums.");
         System.out.println("\t 2 - To open an album.");
-        System.out.println("\t 3 - To quit the application.");
+        System.out.println("\t 3 - Back.");
 	}
 	
 	public static void printAlbumInstructions() {
@@ -69,7 +124,7 @@ public class Main {
         System.out.println("\t 0 - To view options.");
         System.out.println("\t 1 - List album tracks.");
         System.out.println("\t 2 - To add track to playlist.");
-        System.out.println("\t 3 - To quit the application.");
+        System.out.println("\t 3 - Back.");
 	}
 	
 	public static void printPlayInstructions() {
@@ -81,9 +136,86 @@ public class Main {
         System.out.println("\t 4 - Back.");
 	}
 	
+	// Playlist options
 	public static void listAllPlaylists() {
 		for (int i = 0; i < playlists.size(); i++) {
 			System.out.println((i + 1) + ". " + playlists.get(i).getName());
+		}
+	}
+	
+	public static void openPlaylist() {
+		System.out.println("Enter which playlist to open");
+		String title = scanner.nextLine();
+		int position = searchPlaylists(title);
+		if(position != -1) {
+			Playlist currentPlaylist = playlists.get(position);
+			boolean mainMenu = false;
+			int choice = 0;
+			while (!mainMenu) {
+				System.out.println("Enter your choice");
+				choice = scanner.nextInt();
+				switch (!choice) {
+				case 0:
+					printPlaylistInstructions();
+					break;
+				case 1:
+					
+					break;
+				case 2:
+					
+					break;
+				case 3:
+					
+					break;
+				default:
+					break;
+				}
+			}
+		} else {
+			System.out.println("Playlist not found");
+		}
+	}
+	
+	public static void createPlaylist() {
+		System.out.println("Enter the title of the new playlist");
+		String title = scanner.nextLine();
+		if(searchPlaylists(title) == -1) {
+			Playlist newPlaylist = new Playlist(title);
+			playlists.add(newPlaylist);
+			System.out.println(newPlaylist.getName() + " added");
+		} else {
+			System.out.println(title + " is already in playlist");
+		}
+	}
+	
+//	public static void renamePlaylist() {
+//		System.out.println("Enter the playlist to rename (mind spelling and cap)");
+//		String title = scanner.nextLine();
+//		int position = searchPlaylists(title);
+//		if(position != -1) {
+//			Playlist currentPlaylist = playlists.get(position);
+//			System.out.println(currentPlaylist.getName() + " found");
+//			String newName = scanner.nextLine();
+//			int position2 = searchPlaylists(newName);
+//			if(position2 != -1) {
+//				currentPlaylist.setName(newName);
+//			} else {
+//				System.out.println("There is already a playlist named " + newName);
+//			}
+//		} else {
+//			System.out.println("No playlists");
+//		}
+//	}
+	
+	public static void deletePlaylist() {
+		System.out.println("Enter the playlist to delete (mind spelling and cap)");
+		String title = scanner.nextLine();
+		int position = searchPlaylists(title);
+		if(position != -1) {
+			playlists.remove(position);
+			System.out.println(title + " deleted");
+		} else {
+			System.out.println("Playlist not found");
 		}
 	}
 	
@@ -95,4 +227,104 @@ public class Main {
 			}
 		}
 	}
+	
+	private static int searchPlaylists(String title) {
+		for (int i = 0; i < playlists.size(); i++) {
+			if(playlists.get(i).getName().toLowerCase().equals(title.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	// Albums Options
+	public static void listAlbums() {
+		if(albums.size() > 0) {
+			for (int i = 0; i < albums.size(); i++) {
+				System.out.println((i + 1) + ". " + albums.get(i).getName());
+			}
+		} else {
+			System.out.println("There are no albums. The Music Industry has imploded.");
+		}
+	}
+	
+	public static void openAlbum() {
+		System.out.println("Enter the name of the album you want to open");
+		String album = scanner.nextLine();
+		int position = findAlbum(album);
+		if(position != -1) {
+			Album currentAlbum = albums.get(position);
+			System.out.println(currentAlbum.getName() + " by " + currentAlbum.getArtist());
+			printAlbumInstructions();
+			boolean back = false;
+			int choice = 0;
+			while (!back) {
+				System.out.println("Enter your choice");
+				choice = scanner.nextInt();
+				switch (choice) {
+					case 0:
+						printAlbumInstructions();
+						break;
+					case 1:
+						listAlbumTracks(currentAlbum);
+						break;
+					case 2:
+						addToPlaylist(currentAlbum);
+						break;
+					case 3:
+						System.out.println("Back To Main");
+						back = true;
+						break;
+					default:
+						System.out.println("Invalid");
+						break;
+				}
+			}
+		} else {
+			System.out.println("Album not found");
+		}
+	}
+	
+	private static int findAlbum(String name) {
+		for (Album album : albums) {
+			if(album.getName().toLowerCase().equals(name.toLowerCase())) {
+				return albums.indexOf(album);
+			}
+		}
+		return -1;
+	}
+	private static int findAlbum(Song songo) {
+		for (Album album : albums) {
+			if(album.equals(album)) {
+				return albums.indexOf(album);
+			}
+		}
+		return -1;
+	}
+	
+	// Album Options
+	public static void listAlbumTracks(Album album) {
+		album.listTracks();
+	}
+	
+	public static void addToPlaylist(Album album) {
+		System.out.println("Enter track number");
+		int track = scanner.nextInt();
+		if(track >= 1 && track <= album.getTracks().size()) {
+			Song position = album.getTracks().get(track + 1);
+			System.out.println("Enter playlist to add " + position.getName());
+			String playlistName = scanner.nextLine();
+			int playlist = searchPlaylists(playlistName);
+			if(playlist != 1) {
+				Playlist currentPlaylist = playlists.get(playlist);
+				currentPlaylist.addTrack(position);
+			} else {
+				System.out.println("Playlist not found");
+			}
+		} else {
+			System.out.println("Track not available");
+		}
+	}
+	// Play Options
+	
 }
