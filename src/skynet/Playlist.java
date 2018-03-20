@@ -18,23 +18,22 @@ public class Playlist {
 		return name;
 	}
 	
-//	public void setName(String name) {
-//		String oldName = this.name;
-//		this.name = name;
-//		System.out.println(oldName + " is now " this.name);
-//	}
+	public void setName(String name) {
+		String oldName = getName();
+		this.name = name;
+		System.out.println(oldName + " is now " + getName());
+	}
 	
 	public LinkedList<Song> getTracks() {
 		return tracks;
 	}
 	
-//	public void deleteTrack(int position) {
-//		if(findTrack(position) > -1) {
-//			getTracks().remove(findTrack(position));
-//		} else {
-//			System.out.println("Track not found");
-//		}
-//	}
+	public void deleteTrack(int position) {
+		Song track = getTracks().get(position - 1);
+		String title = track.getName();
+		getTracks().remove(position);
+		System.out.println(title + " removed from " + getName());
+	}
 	
 	public void listTracks() {
 		for (int i = 0; i < getTracks().size(); i++) {
@@ -43,9 +42,17 @@ public class Playlist {
 		}
 	}
 	
-//	public void moveTrack() {
-//		
-//	}
+	public void moveTrack(Song song, int place) {
+		getTracks().remove(song);
+		ListIterator<Song> songListIterator = getTracks().listIterator();
+		
+		while (songListIterator.hasNext()) {
+			if(songListIterator.nextIndex() == (place - 1)) {
+				songListIterator.add(song);
+				return;
+			}
+		}
+	}
 	
 	public void addTrack(Song newSong) {
 		ListIterator<Song> songListIterator = getTracks().listIterator();
@@ -60,14 +67,6 @@ public class Playlist {
 		}
 	}
 
-	public int findTrack(String name) {
-		for (Song song : getTracks()) {
-			if(song.getName().equals(name)) {
-				return getTracks().indexOf(song);
-			}
-		}
-		return -1;
-	}
 	public int findTrack(Song songo) {
 		for (Song song : getTracks()) {
 			if(song.equals(songo)) {

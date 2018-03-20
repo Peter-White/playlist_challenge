@@ -69,15 +69,18 @@ public class Main {
 					openPlaylist();
 					break;
 				case 3:
-					createBranch();
+					createPlaylist();
 					break;
 				case 4:
-					updateBranch();
+					renamePlaylist();
 					break;
 				case 5:
-					deleteBranch();
+					deletePlaylist();
 					break;
 				case 6:
+					openAlbum();
+					break;
+				case 7:
 					System.out.println("Goodbye");
 					quit = true;
 					break;
@@ -163,7 +166,8 @@ public class Main {
 					listPlaylistTracks(currentPlaylist);
 					break;
 				case 2:
-					playPlaylist(currentPlaylist);
+//					playPlaylist(currentPlaylist);
+					System.out.println("Under Construction");
 					break;
 				case 3:
 					rearrangeSongs(currentPlaylist);
@@ -225,24 +229,24 @@ public class Main {
 		}
 	}
 	
-//	public static void renamePlaylist() {
-//		System.out.println("Enter the playlist to rename (mind spelling and cap)");
-//		String title = scanner.nextLine();
-//		int position = searchPlaylists(title);
-//		if(position != -1) {
-//			Playlist currentPlaylist = playlists.get(position);
-//			System.out.println(currentPlaylist.getName() + " found");
-//			String newName = scanner.nextLine();
-//			int position2 = searchPlaylists(newName);
-//			if(position2 != -1) {
-//				currentPlaylist.setName(newName);
-//			} else {
-//				System.out.println("There is already a playlist named " + newName);
-//			}
-//		} else {
-//			System.out.println("No playlists");
-//		}
-//	}
+	public static void renamePlaylist() {
+		System.out.println("Enter the playlist to rename (mind spelling and cap)");
+		String title = scanner.nextLine();
+		int position = searchPlaylists(title);
+		if(position != -1) {
+			Playlist currentPlaylist = playlists.get(position);
+			System.out.println(currentPlaylist.getName() + " found");
+			String newName = scanner.nextLine();
+			int position2 = searchPlaylists(newName);
+			if(position2 != -1) {
+				currentPlaylist.setName(newName);
+			} else {
+				System.out.println("There is already a playlist named " + newName);
+			}
+		} else {
+			System.out.println("No playlists");
+		}
+	}
 	
 	public static void deletePlaylist() {
 		System.out.println("Enter the playlist to delete (mind spelling and cap)");
@@ -321,15 +325,7 @@ public class Main {
 		}
 		return -1;
 	}
-	private static int findAlbum(Song songo) {
-		for (Album album : albums) {
-			if(album.equals(album)) {
-				return albums.indexOf(album);
-			}
-		}
-		return -1;
-	}
-	
+
 	// Album Options
 	public static void listAlbumTracks(Album album) {
 		album.listTracks();
@@ -357,6 +353,32 @@ public class Main {
 	// Playlist Options
 	public static void listPlaylistTracks(Playlist playlist) {
 		playlist.listTracks();
+	}
+	
+	public static void deleteSong(Playlist playlist) {
+		System.out.println("Enter track number to remove");
+		int position = scanner.nextInt();
+		if(position >= 1 && position <= playlist.getTracks().size()) {
+			playlist.deleteTrack(position);
+		} else {
+			System.out.println("Invalid track");
+		}
+	}
+	
+	public static void rearrangeSongs(Playlist playlist) {
+		System.out.println("Enter the track number to arrange");
+		int songPosition = scanner.nextInt();
+		if(songPosition >= 1 && songPosition <= playlist.getTracks().size()) {
+			Song currentSong = playlist.getTracks().get(songPosition);
+			System.out.println("What position do you want " + currentSong.getName() + " to be");
+			songPosition = scanner.nextInt();
+			if(songPosition >= 1 && songPosition <= playlist.getTracks().size()) {
+				int placement = songPosition;
+				playlist.moveTrack(currentSong, placement);
+			}
+		} else {
+			System.out.println("Out of bounds");
+		}
 	}
 	
 	// Play Options
