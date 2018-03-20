@@ -141,8 +141,12 @@ public class Main {
 	
 	// Main menu options
 	public static void listAllPlaylists() {
-		for (int i = 0; i < playlists.size(); i++) {
-			System.out.println((i + 1) + ". " + playlists.get(i).getName());
+		if(playlists.size() > 0) {
+			for (int i = 0; i < playlists.size(); i++) {
+				System.out.println((i + 1) + ". " + playlists.get(i).getName());
+			}			
+		} else {
+			System.out.println("You have no playlists. You will never star in Guardians Of The Galaxy.");
 		}
 	}
 	
@@ -236,9 +240,10 @@ public class Main {
 		if(position != -1) {
 			Playlist currentPlaylist = playlists.get(position);
 			System.out.println(currentPlaylist.getName() + " found");
+			System.out.println("What is the new name");
 			String newName = scanner.nextLine();
 			int position2 = searchPlaylists(newName);
-			if(position2 != -1) {
+			if(position2 == -1) {
 				currentPlaylist.setName(newName);
 			} else {
 				System.out.println("There is already a playlist named " + newName);
