@@ -78,9 +78,12 @@ public class Main {
 					deletePlaylist();
 					break;
 				case 6:
-					openAlbum();
+					listAlbums();
 					break;
 				case 7:
+					openAlbum();
+					break;
+				case 8:
 					System.out.println("Goodbye");
 					quit = true;
 					break;
@@ -101,7 +104,8 @@ public class Main {
         System.out.println("\t 4 - To rename a playlist.");
         System.out.println("\t 5 - To delete a playlist.");
         System.out.println("\t 6 - To view your albums.");
-        System.out.println("\t 7 - To quit the application.");
+        System.out.println("\t 7 - To open an album.");
+        System.out.println("\t 8 - To quit the application.");
 	}
 
 	public static void printPlaylistInstructions() {
@@ -340,7 +344,8 @@ public class Main {
 		System.out.println("Enter track number");
 		int track = scanner.nextInt();
 		if(track >= 1 && track <= album.getTracks().size()) {
-			Song position = album.getTracks().get(track + 1);
+			Song position = album.getTracks().get(track - 1);
+			scanner.nextLine();
 			System.out.println("Enter playlist to add " + position.getName());
 			String playlistName = scanner.nextLine();
 			int playlist = searchPlaylists(playlistName);
