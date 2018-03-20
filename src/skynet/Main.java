@@ -46,6 +46,18 @@ public class Main {
 		downwardSpiral.setTracks(new Song("Hurt", downwardSpiral.getArtist(), 373));
 		albums.add(downwardSpiral);
 		
+		Playlist playlist1 = new Playlist("Awesome Mixtape Vol. 1");
+		Playlist playlist2 = new Playlist("Awesome Mixtape Vol. 2");
+		
+		playlists.add(playlist1);
+		playlists.add(playlist2);
+		
+		playlist1.addTrack(discovery.getTracks().get(0));
+		playlist1.addTrack(discovery.getTracks().get(1));
+		playlist1.addTrack(discovery.getTracks().get(2));
+		playlist1.addTrack(discovery.getTracks().get(3));
+		playlist1.addTrack(discovery.getTracks().get(4));
+		
 		boolean quit = false;
 		int choice = 0;
 		
@@ -349,7 +361,7 @@ public class Main {
 			System.out.println("Enter playlist to add " + position.getName());
 			String playlistName = scanner.nextLine();
 			int playlist = searchPlaylists(playlistName);
-			if(playlist != 1) {
+			if(playlist != -1) {
 				Playlist currentPlaylist = playlists.get(playlist);
 				currentPlaylist.addTrack(position);
 			} else {
@@ -369,6 +381,8 @@ public class Main {
 		System.out.println("Enter track number to remove");
 		int position = scanner.nextInt();
 		if(position >= 1 && position <= playlist.getTracks().size()) {
+			position -= 1;
+			System.out.println(playlist.getTracks().get(position).getName());
 			playlist.deleteTrack(position);
 		} else {
 			System.out.println("Invalid track");
@@ -381,10 +395,11 @@ public class Main {
 		if(songPosition >= 1 && songPosition <= playlist.getTracks().size()) {
 			Song currentSong = playlist.getTracks().get(songPosition);
 			System.out.println("What position do you want " + currentSong.getName() + " to be");
-			songPosition = scanner.nextInt();
-			if(songPosition >= 1 && songPosition <= playlist.getTracks().size()) {
-				int placement = songPosition;
-				playlist.moveTrack(currentSong, placement);
+			scanner.nextLine();
+			int newPosition = scanner.nextInt();
+			if(newPosition >= 1 && newPosition <= playlist.getTracks().size()) {
+				System.out.println();
+				playlist.moveTrack(currentSong, newPosition);
 			}
 		} else {
 			System.out.println("Out of bounds");
