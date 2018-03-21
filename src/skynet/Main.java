@@ -1,10 +1,8 @@
 package skynet;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 public class Main {
 	private static ArrayList<Album> albums = new ArrayList<Album>();
@@ -186,8 +184,8 @@ public class Main {
 					listPlaylistTracks(currentPlaylist);
 					break;
 				case 2:
-//					playPlaylist(currentPlaylist);
-					System.out.println("Under Construction");
+					playPlaylist(currentPlaylist);
+//					System.out.println("Under Construction");
 					break;
 				case 3:
 					rearrangeSongs(currentPlaylist);
@@ -407,5 +405,76 @@ public class Main {
 	}
 	
 	// Play Options
-	
+	public static void playPlaylist(Playlist playlist) {
+		boolean quit = false;
+		boolean goingForward = true;
+		ListIterator<Song> listIterator = playlist.getTracks().listIterator();
+		
+		if(playlist.getTracks().isEmpty()) {
+			System.out.println("How is one to play a song when there are no songs to play");
+			return;
+		} else {
+			printPlayInstructions();
+			System.out.println("Now playing " + listIterator.next().getName());
+		}
+		
+		while (!quit) {
+			int action = scanner.nextInt();
+			scanner.nextLine();
+			switch (action) {
+				case 0:
+					printPlayInstructions();
+					break;
+				case 1:
+					if(goingForward) {
+						if(listIterator.hasPrevious()) {
+							listIterator.previous();
+						}
+						goingForward = false;
+					}
+					if(listIterator.hasPrevious()) {
+						System.out.println("Now playing " + listIterator.previous().getName());
+					} else {
+						System.out.println("Reached the beginning of the list");
+						goingForward = true;
+					}
+					break;
+				case 2:
+					if(!goingForward) {
+						if(listIterator.hasNext()) {
+							listIterator.next();
+						}
+						goingForward = true;
+					}
+					if(listIterator.hasNext()) {
+						System.out.println("Now playing " + listIterator.next().getName());
+					} else {
+						System.out.println("Reached the end of the list");
+						goingForward = false;
+					}
+					break;
+				case 3:
+					if(goingForward) {
+						if(listIterator.hasPrevious()) {
+							System.out.println("Now playing " + listIterator.previous().getName());
+							goingForward = false;
+						}
+					} else {
+						if(listIterator.hasNext()) {
+							System.out.println("Now playing " + listIterator.next().getName());
+							goingForward = true;
+						}
+					}
+
+					break;
+				case 4:
+					System.out.println("Done playing");
+					quit = true;
+					break;
+				default:
+					System.out.println("Invalid");
+					break;
+			}
+		}
+	}
 }
